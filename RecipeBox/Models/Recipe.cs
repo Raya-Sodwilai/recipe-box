@@ -8,16 +8,18 @@ namespace RecipeBox.Models
     public Recipe()
     {
       this.Ingredients = new HashSet<RecipeIngredient>();
+      this.Tags = new HashSet<TagRecipe>();
     }
 
     public int RecipeId { get; set; }
-    [Display(name = "Recipe Name")]
+    [Display(Name = "Recipe Name")]
     public string RecipeName { get; set; }
-    [Display(name = "Recipe Instructions")]
+    [Display(Name = "Recipe Instructions")]
     public string RecipeInstructions { get; set; }
-    [Display(name = "Recipe Rating")]
+    [Display(Name = "Recipe Rating")]
     public int RecipeRating { get; set; }
     public virtual ApplicationUser User { get; set; }
     public virtual ICollection<RecipeIngredient> Ingredients { get; set; }
+    public virtual ICollection<TagRecipe> Tags { get; set; }
   }
 }

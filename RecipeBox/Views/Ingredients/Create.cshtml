@@ -1,0 +1,23 @@
+@{
+  Layout = "_Layout";
+}
+
+@model RecipeBox.Models.Ingredient
+
+<div class="container">
+  <h2>Create a new ingredient</h2>
+
+  @using(Html.BeginForm())
+  {
+        
+    <div class="form-group">
+      @Html.Label("Ingredient description")
+      @Html.EditorFor(model => model.IngredientDescription, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+
+    <input type="submit" value="Add a new ingredient" class="btn btn-primary" />
+  }
+
+  <h3>@Html.ActionLink("Ingredients List", "Index")</h3>
+  <h3>@Html.ActionLink("Home", "Index", "Home")</h3>
+</div>

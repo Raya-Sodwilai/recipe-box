@@ -4,14 +4,15 @@
 
 @model RecipeBox.Models.Recipe
 
-<h2>Delete a ingredient</h2>
+<h2>Delete a tag</h2>
+
 
 @using (Html.BeginForm())
 {
   @Html.HiddenFor(model => model.RecipeId)
-  
-  @Html.Label("Select ingredient")
-  @Html.DropDownList("IngredientId")
+
+  @Html.Label("Select tag")
+  @Html.DropDownList("TagId")
 
   <input type="submit" value="Delete" />
 }

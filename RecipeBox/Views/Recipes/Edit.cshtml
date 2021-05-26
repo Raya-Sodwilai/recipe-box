@@ -10,6 +10,7 @@
 
 @using (Html.BeginForm())
 {
+  @Html.HiddenFor(model => model.Tags)
   @Html.HiddenFor(model => model.Ingredients)
   @Html.HiddenFor(model => model.RecipeId)
   <div class="form-group">

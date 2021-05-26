@@ -1,0 +1,29 @@
+@{
+  Layout = "_Layout";
+}
+
+@model RecipeBox.Models.Ingredient
+
+<h2>Ingredient Details</h2>
+<hr/>
+<h3>@Html.DisplayNameFor(model => model.IngredientDescription): @Html.DisplayFor(model => model.IngredientDescription)</h3>
+<hr/>
+
+@if (Model.Recipes.Count == 0)
+{
+  <p>No recipes have been added.</p>
+}
+else
+{
+  <h4>Recipe(s):</h4>
+  <ul>
+    @foreach(var join in Model.Recipes)
+    {
+      <li>@Html.ActionLink($"{@join.Recipe.RecipeName}", "Details", "Recipes", new {id = join.Recipe.RecipeId})</li>
+    }
+  </ul>
+}
+<p>@Html.ActionLink("Edit Ingredient", "Edit", new {id = Model.IngredientId})</p>
+<p>@Html.ActionLink("Delete Ingredient", "Delete", new {id = Model.IngredientId})</p>
+<p>@Html.ActionLink("Go back to list of Ingredients", "Index")</p>
+<p>@Html.ActionLink("Go back to home", "Index", "Home")</p>

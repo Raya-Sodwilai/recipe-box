@@ -24,7 +24,8 @@ namespace RecipeBox.Controllers
 
     public ActionResult Index()
     {
-      return View(_db.Ingredients.RecipeBox());
+      List<Ingredient> model = _db.Ingredients.ToList();
+      return View();
     }
 
     public ActionResult Create()

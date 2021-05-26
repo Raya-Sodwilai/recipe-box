@@ -1,0 +1,25 @@
+@{
+  Layout = "_Layout";
+}
+
+@model RecipeBox.Models.Ingredient
+
+<h2>Edit</h2>
+
+<h4>Edit this ingredient: @Html.DisplayFor(model => model.IngredientDescription)</h4>
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.Recipes)
+  @Html.HiddenFor(model => model.IngredientId)
+  <div class="form-group">
+    @Html.LabelFor(model => model.IngredientDescription)
+    @Html.EditorFor(model => model.IngredientDescription)
+  </div>
+   
+  <input type="submit" value="Save" />
+}
+
+<p>@Html.ActionLink("Add a Recipe", "AddRecipe", new {id = Model.IngredientId})</p>
+<p>@Html.ActionLink("Back to ingredient list", "Index")</p>
+<h3>@Html.ActionLink("Home", "Index", "Home")</h3>

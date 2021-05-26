@@ -17,7 +17,7 @@ namespace RecipeBox.Models
       var builder = new DbContextOptionsBuilder<RecipeBoxContext>();
       var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-      builder.UseMySql(connectionString);
+      builder.UseMySql(configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(configuration["ConnectionStrings:DefaultConnection"]));
 
       return new RecipeBoxContext(builder.Options);
     }

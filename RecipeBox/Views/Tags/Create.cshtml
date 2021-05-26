@@ -1,0 +1,27 @@
+@{
+    Layout = "_Layout";
+}
+
+@model RecipeBox.Models.Tag
+
+<div class="container">
+  <h2>Create a new tag</h2>
+
+  @using(Html.BeginForm())
+  {
+        
+    <div class="form-group">
+      @Html.Label("Tag description")
+      @Html.EditorFor(model => model.TagDescription, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="form-group">
+      @Html.LabelFor(model => model.Recipes)
+      @Html.ListBox("RecipeId")
+    </div>
+
+    <input type="submit" value="Add a new tag" class="btn btn-primary" />
+  }
+
+    <h3>@Html.ActionLink("Tags List", "Index")</h3>
+    <h3>@Html.ActionLink("Home", "Index", "Home")</h3>
+</div>

@@ -10,7 +10,7 @@
 <h3>@Html.DisplayNameFor(model => model.RecipeInstructions): @Html.DisplayFor(model => model.RecipeInstructions)</h3>
 <hr />
 <h3>@Html.DisplayNameFor(model => model.RecipeRating):
-@for (int i=1; i<=10; i++)
+@for (int i = 1; i <= 10; i++)
 {
   if (Model.RecipeRating < i)
   {
@@ -38,10 +38,26 @@ else
   </ul>
 }
 
+@if (Model.Tags.Count == 0)
+{
+  <p>No tags have been added.</p>
+}
+else
+{
+  <h4>Tags:</h4>
+  <ul>
+    @foreach(var join in Model.Tags)
+    {
+      <li>@join.Tag.TagDescription</li>
+    }
+  </ul>
+}
 @if (ViewBag.currentUser == Model.User.Id)
 {
   <p>@Html.ActionLink("Add an ingredient", "AddIngredient", new {id = Model.RecipeId})</p>
   <p>@Html.ActionLink("Delete an ingredient", "DeleteIngredient", new {id = Model.RecipeId})</p>
+  <p>@Html.ActionLink("Add Tag", "AddTag", new {id = Model.RecipeId})</p>
+  <p>@Html.ActionLink("Delete a tag", "DeleteTag", new {id = Model.RecipeId})</p>
   <p>@Html.ActionLink("Edit recipe", "Edit", new {id = Model.RecipeId})</p>
   <p>@Html.ActionLink("Delete recipe", "Delete", new {id = Model.RecipeId})</p>
 }
