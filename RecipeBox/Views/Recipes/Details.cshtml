@@ -1,0 +1,50 @@
+@{
+  Layout = "_Layout";
+}
+@model RecipeBox.Models.Recipe
+
+<h2>Recipe Details</h2>
+<hr/>
+<h3>@Html.DisplayNameFor(model => model.RecipeName): @Html.DisplayFor(model => model.RecipeName)</h3>
+<hr/>
+<h3>@Html.DisplayNameFor(model => model.RecipeInstructions): @Html.DisplayFor(model => model.RecipeInstructions)</h3>
+<hr />
+<h3>@Html.DisplayNameFor(model => model.RecipeRating):
+@for (int i=1; i<=10; i++)
+{
+  if (Model.RecipeRating < i)
+  {
+    <i class="fa fa-star-o"></i>
+  }
+  else
+  {
+    <i class="fa fa-star"></i>
+  }
+}
+
+<hr />
+@if (Model.Ingredients.Count == 0)
+{
+  <p>No ingredients have been added.</p>
+}
+else
+{
+  <h4>Ingredients:</h4>
+  <ul>
+    @foreach(var join in Model.Ingredients)
+    {
+      <li>@join.Ingredient.IngredientDescription</li>
+    }
+  </ul>
+}
+
+@if (ViewBag.currentUser == Model.User.Id)
+{
+  <p>@Html.ActionLink("Add an ingredient", "AddIngredient", new {id = Model.RecipeId})</p>
+  <p>@Html.ActionLink("Delete an ingredient", "DeleteIngredient", new {id = Model.RecipeId})</p>
+  <p>@Html.ActionLink("Edit recipe", "Edit", new {id = Model.RecipeId})</p>
+  <p>@Html.ActionLink("Delete recipe", "Delete", new {id = Model.RecipeId})</p>
+}
+
+<p>@Html.ActionLink("Go back to list of recipes", "Index")</p>
+<p>@Html.ActionLink("Go back to home", "Index", "Home")</p>
