@@ -35,33 +35,30 @@ namespace RecipeBox.Controllers
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
-      ViewBag.TagId = new MultiSelectList(_db.Tags, "TagId", "TagDescription");
+      // ViewBag.TagId = new MultiSelectList(_db.Tags, "TagId", "TagDescription");
       ViewBag.IngredientId = new MultiSelectList(_db.Ingredients, "IngredientId", "IngredientDescription");
       ViewBag.CurrentUser = userId;
       return View();
     }
 
     [HttpPost]
-    public async Task<ActionResult>  Create(Recipe recipe, List<int> IngredientId, List<int> TagId)
+    public async Task<ActionResult>  Create(Recipe recipe, int IngredientId)
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
       recipe.User = currentUser;
       _db.Recipes.Add(recipe);
-      if (IngredientId.Count != 0)
+      if (IngredientId != 0)
       {
-        foreach (int Ingredient in IngredientId)
-        {
-          _db.RecipeIngredient.Add(new RecipeIngredient() { IngredientId = Ingredient, RecipeId = recipe.RecipeId });
-        }   
+          _db.RecipeIngredient.Add(new RecipeIngredient() { IngredientId = IngredientId, RecipeId = recipe.RecipeId });  
       }
-      if (TagId.Count != 0)
-      {
-        foreach (int Tag in TagId)
-        {
-          _db.TagRecipe.Add(new TagRecipe() { TagId = Tag, RecipeId = recipe.RecipeId });
-        }   
-      }
+      // if (TagId.Count != 0)
+      // {
+      //   foreach (int Tag in TagId)
+      //   {
+      //     _db.TagRecipe.Add(new TagRecipe() { TagId = Tag, RecipeId = recipe.RecipeId });
+      //   }   
+      // }
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
@@ -74,14 +71,14 @@ namespace RecipeBox.Controllers
         .Include(recipe => recipe.User)
         .Include(recipe => recipe.Ingredients)
         .ThenInclude(join => join.Ingredient)
-        .Include(recipe => recipe.Tags)
-        .ThenInclude(join => join.Tag)
+        // .Include(recipe => recipe.Tags)
+        // .ThenInclude(join => join.Tag)
         .FirstOrDefault(recipe => recipe.RecipeId == id);
       ViewBag.currentUser = userId;
       return View(thisRecipe);
     }
 
-    public async Task<ActionResult> Edit(int id)
+    public ActionResult Edit(int id)
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var thisRecipe = _db.Recipes.Include(recipe => recipe.User).FirstOrDefault(recipe => recipe.RecipeId == id);
@@ -100,29 +97,29 @@ namespace RecipeBox.Controllers
       return RedirectToAction("Index");
     }
 
-    public ActionResult AddTag(int id)
-    {
-      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-      var thisRecipe = _db.Recipes.FirstOrDefault(recipes => recipes.RecipeId == id);
-      if (userId != thisRecipe.User.Id) 
-      {
-        return RedirectToAction("Details", new {id = id});
-      }
-      ViewBag.TagId = new SelectList(_db.Tags, "TagId", "TagDescription");
-      return View(thisRecipe);
-    }
+    // public ActionResult AddTag(int id)
+    // {
+    //   var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+    //   var thisRecipe = _db.Recipes.FirstOrDefault(recipes => recipes.RecipeId == id);
+    //   if (userId != thisRecipe.User.Id) 
+    //   {
+    //     return RedirectToAction("Details", new {id = id});
+    //   }
+    //   ViewBag.TagId = new SelectList(_db.Tags, "TagId", "TagDescription");
+    //   return View(thisRecipe);
+    // }
 
-    [HttpPost]
-    public ActionResult AddTag(Recipe recipe, int TagId)
-    {
-      TagRecipe join = _db.TagRecipe.FirstOrDefault(tagrecipe => tagrecipe.TagId == TagId && tagrecipe.RecipeId == recipe.RecipeId);
-      if (TagId != 0 && join == null)
-      {
-        _db.TagRecipe.Add(new TagRecipe() { TagId = TagId, RecipeId = recipe.RecipeId });
-      }
-      _db.SaveChanges();
-      return RedirectToAction("Index");
-    }
+    // [HttpPost]
+    // public ActionResult AddTag(Recipe recipe, int TagId)
+    // {
+    //   TagRecipe join = _db.TagRecipe.FirstOrDefault(tagrecipe => tagrecipe.TagId == TagId && tagrecipe.RecipeId == recipe.RecipeId);
+    //   if (TagId != 0 && join == null)
+    //   {
+    //     _db.TagRecipe.Add(new TagRecipe() { TagId = TagId, RecipeId = recipe.RecipeId });
+    //   }
+    //   _db.SaveChanges();
+    //   return RedirectToAction("Index");
+    // }
     public ActionResult Delete(int id)
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -187,19 +184,19 @@ namespace RecipeBox.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
-     public ActionResult DeleteTag(int id)
-    {
-      var thisRecipe = _db.Recipes.Include(recipes => recipes.Tags).FirstOrDefault(recipe => recipe.RecipeId == id);
-      ViewBag.TagId = new SelectList(_db.TagRecipe.Include(tagrecipe => tagrecipe.Tag).Where(tagrecipe => tagrecipe.RecipeId == id), "Tag.TagId", "Tag.TagDescription");
-      return View(thisRecipe);
-    }
-    [HttpPost]
-    public ActionResult DeleteTag(Recipe recipe, int TagId)
-    {
-      TagRecipe join = _db.TagRecipe.FirstOrDefault(recipeTag => recipeTag.TagId == TagId && recipeTag.RecipeId == recipe.RecipeId);
-      _db.TagRecipe.Remove(join);
-      _db.SaveChanges();
-      return RedirectToAction("Index");
-    }
+    //  public ActionResult DeleteTag(int id)
+    // {
+    //   var thisRecipe = _db.Recipes.Include(recipes => recipes.Tags).FirstOrDefault(recipe => recipe.RecipeId == id);
+    //   ViewBag.TagId = new SelectList(_db.TagRecipe.Include(tagrecipe => tagrecipe.Tag).Where(tagrecipe => tagrecipe.RecipeId == id), "Tag.TagId", "Tag.TagDescription");
+    //   return View(thisRecipe);
+    // }
+    // [HttpPost]
+    // public ActionResult DeleteTag(Recipe recipe, int TagId)
+    // {
+    //   TagRecipe join = _db.TagRecipe.FirstOrDefault(recipeTag => recipeTag.TagId == TagId && recipeTag.RecipeId == recipe.RecipeId);
+    //   _db.TagRecipe.Remove(join);
+    //   _db.SaveChanges();
+    //   return RedirectToAction("Index");
+    // }
   }
 }

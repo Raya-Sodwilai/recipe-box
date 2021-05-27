@@ -38,7 +38,7 @@ else
   </ul>
 }
 
-@if (Model.Tags.Count == 0)
+@* @if (Model.Tags.Count == 0)
 {
   <p>No tags have been added.</p>
 }
@@ -51,13 +51,14 @@ else
       <li>@join.Tag.TagDescription</li>
     }
   </ul>
-}
+} *@
+
 @if (ViewBag.currentUser == Model.User.Id)
 {
   <p>@Html.ActionLink("Add an ingredient", "AddIngredient", new {id = Model.RecipeId})</p>
   <p>@Html.ActionLink("Delete an ingredient", "DeleteIngredient", new {id = Model.RecipeId})</p>
-  <p>@Html.ActionLink("Add Tag", "AddTag", new {id = Model.RecipeId})</p>
-  <p>@Html.ActionLink("Delete a tag", "DeleteTag", new {id = Model.RecipeId})</p>
+  @* <p>@Html.ActionLink("Add Tag", "AddTag", new {id = Model.RecipeId})</p>
+  <p>@Html.ActionLink("Delete a tag", "DeleteTag", new {id = Model.RecipeId})</p> *@
   <p>@Html.ActionLink("Edit recipe", "Edit", new {id = Model.RecipeId})</p>
   <p>@Html.ActionLink("Delete recipe", "Delete", new {id = Model.RecipeId})</p>
 }

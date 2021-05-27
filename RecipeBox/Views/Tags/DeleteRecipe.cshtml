@@ -2,17 +2,16 @@
   Layout = "_Layout";
 }
 
-@model RecipeBox.Models.Recipe
+@model RecipeBox.Models.Tag
 
-<h2>Delete a tag</h2>
-
+<h2>Delete a recipe</h2>
 
 @using (Html.BeginForm())
 {
-  @Html.HiddenFor(model => model.RecipeId)
+  @Html.HiddenFor(model => model.TagId)
 
-  @Html.Label("Select tag")
-  @Html.DropDownList("TagId")
+  @Html.Label("Select recipe")
+  @Html.DropDownList("RecipeId")
 
   <input type="submit" value="Delete" />
 }

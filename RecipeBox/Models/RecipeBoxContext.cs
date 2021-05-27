@@ -9,9 +9,9 @@ namespace RecipeBox.Models
     public DbSet<Ingredient> Ingredients { get; set; } 
     public DbSet<RecipeIngredient> RecipeIngredient { get; set; }
     public RecipeBoxContext(DbContextOptions options) : base(options) { }
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-      optionsBuilder.UseLazyLoadingProxies();
-    }
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    // {
+    //   optionsBuilder.UseLazyLoadingProxies();
+    // }
   }
 }

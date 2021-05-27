@@ -8,7 +8,7 @@ namespace RecipeBox.Models
     public Recipe()
     {
       this.Ingredients = new HashSet<RecipeIngredient>();
-      this.Tags = new HashSet<TagRecipe>();
+      // this.Tags = new HashSet<TagRecipe>();
     }
 
     public int RecipeId { get; set; }
@@ -20,6 +20,6 @@ namespace RecipeBox.Models
     public int RecipeRating { get; set; }
     public virtual ApplicationUser User { get; set; }
     public virtual ICollection<RecipeIngredient> Ingredients { get; set; }
-    public virtual ICollection<TagRecipe> Tags { get; set; }
+    // public virtual ICollection<TagRecipe> Tags { get; set; }
   }
 }

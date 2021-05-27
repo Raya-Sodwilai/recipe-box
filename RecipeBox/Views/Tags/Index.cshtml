@@ -1,0 +1,18 @@
+@* @{
+  Layout = "_Layout";
+}
+
+<h1>Tags:</h1>
+@if (Model.Count == 0)
+{
+  <h3>No tags have been added yet.</h3>
+}
+@foreach (Tag tag in Model)
+{
+  <h3><li>
+    @Html.ActionLink($"{tag.TagDescription}", "Details", new {id = tag.TagId})
+  </li></h3>
+}
+
+<h3>@Html.ActionLink("Add a new tag", "Create")</h3>
+<h3>@Html.ActionLink("Home", "Index", "Home")</h3> *@
